@@ -1,0 +1,65 @@
+1. 
+2. delete user
+3. password recovery
+4. 
+5. 
+6. style
+7. hard mode!
+
+work on persisting user
+the upload data
+then style
+
+
+
+
+
+
+1. multiple endpoints (sets of ten - no ambiguous answers)
+2. homepage (spiel how it works etc) (maybe in wordpress?)
+    waiting on login stuff
+3. subhomepage for each level (choice of sets)
+4. figure out the login:
+    App uses wordpress backend?
+        1. register user 
+        2. login/logout user
+            3. delete user
+            4. password reset user  
+        5. persist user with jwt auth
+            dashboard and other quiz pages have access to <Persist />  20160
+            this checks for jwt. if not present, message to login
+            it then sends jwt to refresh before any api call
+            if fails, make sure any data in local storage 
+
+5 Create dashboard
+            dashboard shows completed modules (pass / fail)
+            middleware checks jwt and then adds and deletes via wbdp via api
+            then new user middleware as above then creates new user and adds to it
+
+            1 dashboard calls middleware and sends: jwt only?
+            2 middleware sends to jwt validate and gets ok
+            3 middleware passes userID and specialKey like "77&778633ab"
+            tomorrow: call from react with jwt and ID. middleware verifies, calls endpoint, returns dashboard.
+            test the create function first.
+
+            game page (or menu page!) updates word provider with endpoint
+            dashboard downloads data as it exists on each render
+            gamepage sends data to an uploader to update db
+
+            db: user id, id of course, amount of that course completed
+            blob: {[user:7], [course:75, [mark: 3]]}
+
+userDetails = {"userID":1, "courses": [{ "name":"cpe1", "marks":["7"] },{ "name":"cpe2", "marks":["5"]},{ "name":"cpe3", "marks":["2"]}]}
+
+
+
+
+
+
+
+    
+
+
+
+
+
