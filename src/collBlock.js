@@ -6,10 +6,10 @@ let randomColor = require('randomcolor'); // import the script
 let col1 = randomColor(); // a hex code for an attractive color
 let col2 = randomColor(); // a hex code for an attractive color
 let color1 = {
-    color: col1
+    color: 'Navy'
 }
 let color2 = {
-    color: col2
+    color: 'Green'
 }
 return (
     <div className="collocations">
