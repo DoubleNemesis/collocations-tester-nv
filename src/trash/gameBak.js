@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
-import { WordProvider, WordContext } from "./wordsProvider"
-import Home from "./home.js"
+import { WordProvider, WordContext } from "../wordsProvider"
+import Home from "../home.js"
 
 function GameName(props){
     return(

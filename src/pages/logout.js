@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
-import { UserDispatchContext } from "./userProvider";
+import { UserDispatchContext } from "../context/userProvider";
 import { useHistory } from 'react-router-dom'
+import PageTitle from '../components/PageTitle'
 
 function Logout() {
     const history = useHistory();
@@ -19,11 +20,12 @@ function Logout() {
     }
 
     return (
+        <>
+        <PageTitle title="log out"/>
         <div id="otherPages">
-            <p>Click here to sign out</p>
 <button onClick={handleClick}>Sign out</button>
         </div>
-        
+        </>
     )
 }
 

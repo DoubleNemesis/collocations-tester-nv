@@ -1,10 +1,11 @@
-import React, { useState, useContext } from 'react'
-import Button from './components/button'
+import React, { useState, useContext, useEffect } from 'react'
+import Button from '../components/button'
 import { useHistory } from 'react-router-dom'
-import { WordDispatchContext } from "./wordsProvider"
-import HomePageBlock from './homePageBlock.js'
-import UserArea from './userArea.js'
-import Persist from './persist.js'
+import { WordDispatchContext } from "../context/wordsProvider"
+import { DisplayDispatchContext } from "../context/wordsProvider"
+import HomePageBlock from '../components/homePageBlock.js'
+import UserArea from '../components/userArea.js'
+import Persist from '../components/persist.js'
 
 function Home() {
     const setUrl = useContext(WordDispatchContext)
@@ -14,6 +15,13 @@ function Home() {
     const [gmsList, setGmsList] = useState('');
     const [isLoading, setIsLoading] = useState('Loading...');
     let newGameName = ''
+
+    const {setGameStyle, setRefresh} = useContext(DisplayDispatchContext)
+
+    useEffect(()=>{
+        setGameStyle({display:'none'})
+        setRefresh((prev)=>!prev)
+    },[])
 
     if (document.getElementById('endGameArea')) {
         document.getElementById('endGameArea').style.display = 'none';

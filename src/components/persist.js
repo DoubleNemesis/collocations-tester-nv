@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react"
-import { UserContext, UserDispatchContext } from "./userProvider";
+import { UserContext, UserDispatchContext } from "../context/userProvider";
 
 function Persist() {
     const userDetails = useContext(UserContext);

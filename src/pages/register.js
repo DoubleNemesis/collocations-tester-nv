@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect } from "react"
-import { UserContext, UserDispatchContext } from "./userProvider";
+import { UserContext, UserDispatchContext } from "../context/userProvider";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import PageTitle from '../components/PageTitle'
 
 function Register() {
     const setUserDetails = useContext(UserDispatchContext);
@@ -77,7 +78,7 @@ function Register() {
                             username: loginDetails.user_login,
                             userJWT: jwt
                         })
-                        window.location.replace('https://tomsclassroom.com/react/#/')
+                        window.location.replace('https://tomsclassroom.com/collocations-tester/#/')
                     }
                     return response.text()
                 })
@@ -92,6 +93,8 @@ function Register() {
     }
 
     return (
+        <>
+        <PageTitle title="sign up"/>
         <div className="profile" id="otherPages">
             <h2>Sign Up</h2>
             <form onSubmit={handleFormSubmit} >
@@ -122,6 +125,7 @@ function Register() {
             </div>
 
         </div>
+        </>
     )
 }
 export default Register

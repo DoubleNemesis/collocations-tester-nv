@@ -1,5 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
-import { UserDispatchContext } from "./userProvider";
+import { UserDispatchContext } from "../context/userProvider";
+import PageTitle from '../components/PageTitle'
 
 function Login() {
   const setUserDetails = useContext(UserDispatchContext);
@@ -93,7 +94,7 @@ function Login() {
                 userData: newUserData,
                 isLoggedIn: true,
               })
-              window.location.replace('https://tomsclassroom.com/react/#')
+              window.location.replace('https://tomsclassroom.com/collocations-tester/#')
               return response.text()
             })
               .then(function (post) {
@@ -105,8 +106,10 @@ function Login() {
   }, [urlToLogin])
 
   return (
+    <>
+    <PageTitle title="login"/>
     <div className="profile" id="otherPages">
-        <h2>Log In</h2>
+
         <form onSubmit={handleSubmit}>
       
       <div className="form-group">
@@ -128,6 +131,7 @@ function Login() {
       
       <p><a href="./#/account">Password Reset</a></p>
     </div>
+    </>
   );
 }
 

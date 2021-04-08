@@ -1,11 +1,13 @@
 import React, { useContext, useEffect, useState } from "react";
 import Home from "./home.js"
-import Button from "./components/button.js"
+import Button from "../components/button.js"
+
 
 function Game(props) {
 
+
      return (
-        <div id="overallGame">
+<>
             <div id="isLoading">{props.loading}</div>
             <div id="gamePage" style={props.style}>
             <div id="gameTitle"><b>{props.gameName}</b><hr/><div id="instruction">Select the tile that <u>best</u> completes the collocation!</div></div>
@@ -20,9 +22,7 @@ function Game(props) {
                 <Button class="endGameBtns" value="home" name="Home" handleClick={props.endGame}/>
            </div>
         </div>
-
-        </div>
-
+</>
 
     );
 }

@@ -1,18 +1,17 @@
 import React from "react";
-import { UserProvider } from "./userProvider";
-import { WordProvider } from "./wordsProvider"
+import { UserProvider } from "./context/userProvider";
+import { WordProvider } from "./context/wordsProvider"
 import { HashRouter as Router, Switch, Route } from "react-router-dom";
-import "./styles.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Register from "./register";
-import Login from "./login";
-import Logout from "./logout";
-import Home from "./home";
-import Game from "./game";
-import TopNav from "./topNav";
-import Footer from "./footer"
-import HomePageBlock from "./homePageBlock"
-import Account from "./account"
+import Register from "./pages/register";
+import Login from "./pages/login";
+import Logout from "./pages/logout";
+import Home from "./pages/home";
+import Game from "./pages/game";
+import TopNav from "./nav/topNav";
+import Footer from "./components/footer"
+import Account from "./pages/account"
+import Dashboard from "./pages/dashboard"
 
 function Main() {
 
@@ -38,10 +37,13 @@ function Main() {
             <Route exact path="/">
               <Home/>
             </Route>
+            <Route path="/dashboard">
+            <Dashboard />
+          </Route>
             <Route path="/game">
-              <div className="mainSection">
-
-              </div>
+              {/* <div className="mainSection"> */}
+              <Game/>
+              {/* </div> */}
             </Route>
          </WordProvider>
         </Switch>

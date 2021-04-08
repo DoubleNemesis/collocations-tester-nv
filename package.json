@@ -1,6 +1,6 @@
 {
   "name": "collocations",
-  "homepage": "https://tomsclassroom.com/react/",
+  "homepage": "https://tomsclassroom.com/collocations-tester/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

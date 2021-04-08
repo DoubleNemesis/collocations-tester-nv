@@ -1,7 +1,9 @@
 import React, { useContext, useState } from "react"
 import styled from 'styled-components'
-import { UserContext } from "./userProvider";
-import { useHistory } from 'react-router-dom'
+import { UserContext } from "../context/userProvider";
+import { useHistory } from 'react-router-dom';
+import UserAreaAc from '../components/UserAreaAc.js'
+import PageTitle from '../components/PageTitle'
 
 function Account() {
     let history = useHistory()
@@ -91,10 +93,10 @@ function Account() {
     }
 
     return (
+        <>
+        <PageTitle title="account"/>
         <div id="otherPages">
-            <h3>{displayName}</h3>
-            <h4>Reset Your Password</h4>
-            <p>Type your email address in the box below. We'll email you a security code.</p>
+            <p>We'll email you a security code.</p>
             {emailToReset}
             <div style={messageStyle}>{message} {redirectMessage}</div>
             <form onSubmit={handleSubmitEmail} id="emailForm">
@@ -124,7 +126,9 @@ function Account() {
                     <input type="submit" value="Change Password"></input>
                 </div>
             </form>
+            <UserAreaAc/>
         </div>
+        </>
     )
 }
 

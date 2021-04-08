@@ -6,7 +6,7 @@ function Footer(props) {
 
     return (
         <div>
-            <div class="push">
+            <div className="push">
             <hr/>
             <div className="footer">&#169; TomsClassroom.com {year}</div>
             </div>

@@ -1,12 +1,10 @@
 import React, { createContext, useState, useEffect, useContext } from "react";
-import { UserProvider, UserContext, UserDispatchContext } from "./userProvider";
-import Game from './game.js'
-import { useHistory } from 'react-router-dom'
+import { UserProvider, UserContext, UserDispatchContext } from "../context/userProvider";
 
+const WordContext = createContext(undefined);
 const WordDispatchContext = createContext(undefined);
 
 function WordProvider({ children }) {
-    const history = useHistory()
     const userDetails = useContext(UserContext);
     const setUserDetails = useContext(UserDispatchContext)
     const [url, setUrl] = useState('');
@@ -18,12 +16,6 @@ function WordProvider({ children }) {
     const [message, setMessage] = useState([]);
     const [mistakes, setMistakes] = useState(0);
     const [counter, setCounter] = useState(0);
-    const [refresh, setRefresh] = useState(false);
-    const [gameStyle, setGameStyle] = useState({display: 'none'})
-    const [gameName, setGameName] = useState('')
-    const [isLoading, setIsLoading] = useState('Loading...');
-    const [newGameName, setNewGameName] = useState('')
-
 
     useEffect(() => {
         if (url.length > 2) {
@@ -36,14 +28,9 @@ function WordProvider({ children }) {
                     setWordSet(x)
                     let y = Object.keys(x).length
                     setGameLength(y)
-                    setGameStyle({display: 'inline'})
-                    setGameName(url)
-                    setIsLoading('')
-                    setCounter(0)
-                    setMistakes(0)
                 })
         }
-    }, [url, refresh])
+    }, [url])
 
     let tilesArray = []
 
@@ -75,16 +62,14 @@ function WordProvider({ children }) {
             // game ends
             if (Object.keys(wordSet).length === 0) {
                 setMessage('Game Over')
-                //let GameId = url.slice(68);
-                let GameId = url;
+                let GameId = url.slice(68);
                 let numberCorrect = gameLength - mistakes;
                 let newJSONUserDataString = '';
                 let JSONUserData = '';
                 let create;
                 // if user is signed in
                 if (userDetails.isLoggedIn) {
-                    if (userDetails.userData !== 'undefined' && userDetails.userData !== '' && userDetails.userData) {
-                        //console.log(userDetails.userData)
+                    if (userDetails.userData !== "") {
                         JSONUserData = JSON.parse(userDetails.userData);
                         // if this is not first attempt, find the name of course, update it and resend it
                         if (JSONUserData['courses'].findIndex(x => x.name == GameId) >= 0) {
@@ -113,8 +98,8 @@ function WordProvider({ children }) {
                         JSONUserData.courses['0'] = {};
                         JSONUserData.courses['0'].name = GameId;
                         JSONUserData.courses['0'].marks = numberCorrect;
-                    }
 
+                    }
                     newJSONUserDataString = JSON.stringify(JSONUserData);
                     let urlForUpdate = 'https://tomsclassroom.com/student/ajaxphp-update-game.php';
                     let formData = new FormData()
@@ -122,7 +107,7 @@ function WordProvider({ children }) {
                     formData.append('jwt', userDetails.userJWT)
                     formData.append('userData', newJSONUserDataString)
                     formData.append('create', create)
-                    //console.log(create);
+                    console.log(create);
                     localStorage.setItem('userData', newJSONUserDataString)
                     fetch(urlForUpdate, {
                         method: 'POST',
@@ -134,21 +119,12 @@ function WordProvider({ children }) {
                         .then((post) => {
                             setUserDetails(prev => ({ ...prev, userData: newJSONUserDataString, }))
                         })
-                    // handle end of game logged in
-                    // on navigate away hide #gamePage
-                    console.log(gameName, 'end')
-                    document.getElementById('gameArea').style.display = 'none';
-                    document.getElementById('instruction').style.display = 'none';
-                    document.getElementById('endGameArea').style.display = 'flex';
-                    //document.getElementById('gameTitle').style.visibility ='hidden';
+                        // handle end of game logged in
                 }
                 else {
-                    //console.log('user not logged in so finish') // handle end of game not logged in
+                    console.log('user not logged in so finish') // handle end of game not logged in
                     document.getElementById('gameArea').style.display = 'none';
-                    document.getElementById('instruction').style.display = 'none';
-                    document.getElementById('endGameArea').style.display = 'flex';
-                    //document.getElementById('gameTitle').style.visibility ='hidden';
-                    // on navigate away hide #gamePage
+                    document.getElementById('EndGameArea').style.display = 'inline';
                 }
             }
         }
@@ -174,56 +150,17 @@ function WordProvider({ children }) {
         setTargetPhrase(myPhrases[ran])
     }, [wordSet])
 
-    function endGame(e){
-        let buttonClicked = e.target.value;
-        if(buttonClicked == 'home'){
-            setRefresh((prev)=>!prev)
-        document.getElementById('endGameArea').style.display = 'none';
-        document.getElementById('instruction').style.display = 'none';
-        document.getElementById('gameArea').style.display = 'none';
-        document.getElementById('gameTitle').style.visibility ='hidden';
-        setCounter(0)
-        setMistakes(0)
-        history.push('/')
-        //reset values
-        }
-        else if (buttonClicked == 'again'){
-        //reset values
-        //set url to gameName
-        setRefresh((prev)=>!prev)
-        setCounter(0)
-        setMistakes(0)
-        document.getElementById('gameArea').style.display = 'inline';
-        document.getElementById('instruction').style.display = 'inline';
-        document.getElementById('endGameArea').style.display = 'none';
-        document.getElementById('gameTitle').style.visibility ='visible';
-        } 
-    }
-
-    useEffect(()=>{
-        (function removeHyphens(x){
-            if (x.indexOf('-')>0){
-                let newGN = x.replace('-', ' ')
-                setNewGameName(newGN)
-                //console.log('removing hyphens')
-                return removeHyphens(newGN)
-            }
-            else {
-                setNewGameName(x);
-             }
-        })(gameName) 
-    },[gameName])
-
-
     return (
-        <div>
+        <WordContext.Provider value={{
+            tiles: [tiles, setTiles], wordSet: [wordSet, setWordSet],
+            targetPhrase: [targetPhrase, setTargetPhrase], selectedTile: [selectedTile, setSelectedTile], mistakes: [mistakes, setMistakes],
+            gameLength: [gameLength, setGameLength], message: [message, setMessage], counter: [counter, setCounter], gameName: [url]
+        }}>
             <WordDispatchContext.Provider value={setUrl}>
                 {children}
             </WordDispatchContext.Provider>
-            <Game loading={isLoading} gameName={newGameName.toUpperCase()} id={(message == 'Try Again' ? 'red' : 'inherit')} targetPhrase={targetPhrase}
-                tiles={tiles} counter={counter} gameLength={gameLength} mistakes={mistakes} endGame={endGame} style={gameStyle}/>
-        </div>
+        </WordContext.Provider>
     );
 }
 
-export { WordProvider, WordDispatchContext };
+export { WordProvider, WordContext, WordDispatchContext };

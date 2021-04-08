@@ -132,7 +132,7 @@ label {
 
 #otherPages {
   display: flex;
-  height: 90%;
+  min-height: 90%;
   flex-direction: column;
   align-items: center;
   align-content: center;
@@ -140,6 +140,7 @@ label {
   text-align: center;
   padding: 2em 10px;
   margin-top: 4em;
+  border: 1px solid red;
 }
 
 code {
@@ -347,7 +348,7 @@ p {
   .subHeading {
     margin-bottom: 5vh;
   }
-  #homeTextArea p {}
+  /* #homeTextArea p {} */
 }
 
 #x {
@@ -466,9 +467,6 @@ width: 90%;
   margin-top: auto;
 }
 
-#overallGame {
-  margin-bottom: 200px;
-}
 
 .tile:hover {
   background-color: limegreen;
@@ -582,11 +580,11 @@ width: 90%;
     color: black;
     /* font-family: 'Dancing Script', cursive; */
   }
-  .mainPage {
-    /* background-image: url(https://tomsclassroom.com/react/lionbg2.jpg); 
-    background-size: 100vw auto; */
-    /* min-height: 10vh; */
-  }
+  /* .mainPage {
+    background-image: url(https://tomsclassroom.com/react/lionbg2.jpg); 
+    background-size: 100vw auto; 
+    min-height: 10vh;
+  } */
   .homeBtn {
     background-color: whitesmoke;
     color: #333;
