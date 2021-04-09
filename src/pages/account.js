@@ -2,7 +2,6 @@ import React, { useContext, useState } from "react"
 import styled from 'styled-components'
 import { UserContext } from "../context/userProvider";
 import { useHistory } from 'react-router-dom';
-import UserAreaAc from '../components/UserAreaAc.js'
 import PageTitle from '../components/PageTitle'
 
 function Account() {
@@ -96,6 +95,7 @@ function Account() {
         <>
         <PageTitle title="account"/>
         <div id="otherPages">
+            <p>To change or recover your password, please enter your email address.</p>
             <p>We'll email you a security code.</p>
             {emailToReset}
             <div style={messageStyle}>{message} {redirectMessage}</div>
@@ -126,7 +126,6 @@ function Account() {
                     <input type="submit" value="Change Password"></input>
                 </div>
             </form>
-            <UserAreaAc/>
         </div>
         </>
     )

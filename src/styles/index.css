@@ -54,7 +54,7 @@ body {
   }
 }
 
-@media(min-width: 900px) {
+/* @media(min-width: 900px) {
   #testsAndScores {
     text-align: left;
     flex: 25%;
@@ -74,7 +74,7 @@ body {
     float: right;
     margin-right: 2vw;
   }
-}
+} */
 
 #loadingMessages {
   display: inline;
@@ -140,7 +140,6 @@ label {
   text-align: center;
   padding: 2em 10px;
   margin-top: 4em;
-  border: 1px solid red;
 }
 
 code {
@@ -411,13 +410,14 @@ width: 90%;
 }
 
 .targetPhrase {
-  font-size: 220%;
+  font-size: 120%;
   color: limegreen;
-  margin-bottom: 2vh;
+  margin: 0em .2em .9em .2em;
 }
 
-@media(min-width: 700px) {
+@media(min-width: 900px) {
   .targetPhrase {
+    font-size: 220%;
     margin-bottom: 15vh;
   }
 }
@@ -502,9 +502,9 @@ width: 90%;
 }
 
 #gameTitle {
-  width: 100vw;
-  font-size: 130%;
-  margin-bottom: 30px;
+  width: 98%;
+  font-size: 110%;
+  margin: 0 .2em .2em .2em;
 }
 
 #gamePage {
@@ -526,16 +526,15 @@ width: 90%;
 */
 
 #gameArea {
-  margin-top: 5vh;
+  margin: 5vh;
   padding-top: 2vh;
   background-color: #2964a8;
 }
 
 .message {
-  position: sticky;
   bottom: 0;
   /* background-color: #25274d; */
-  margin-top: 2em;
+  margin-top: .4em;
   border-top: 1px solid whitesmoke;
   border-bottom: 1px solid whitesmoke;
   color: #aaabb8;

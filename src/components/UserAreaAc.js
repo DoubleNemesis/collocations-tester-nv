@@ -9,7 +9,7 @@ function UserArea() {
     const history = useHistory()
     const setUrl = useContext(WordDispatchContext)
     const userDetails = useContext(UserContext);
-    const display = (userDetails.isLoggedIn) ? 'inline' : 'none';
+    const display = (userDetails.isLoggedIn) ? 'inline' : 'inline';
     const userAreaDisplay = { display: display }
     let newGameName = ''
 
@@ -53,16 +53,7 @@ function UserArea() {
         <div style={userAreaDisplay} id="userArea">
             <h4>saved tests</h4>
             <div id="testsAndScores">
-                <ul>
                     {userAreaData}
-                    {/* <DashboardBlock keyt="1" gameName="FCE travel" marks="4" name="play again" value='FCE-travel' handleClick={handleClick}/>
-                    <DashboardBlock keyt="2" gameName="FCE work" marks="10" name="play again"/>
-                    <DashboardBlock keyt="3" gameName="FCE leisure" marks="6" name="play again"/>
-                    <DashboardBlock keyt="4" gameName="CAE travel" marks="9" name="play again"/>
-                    <DashboardBlock keyt="5" gameName="CPE travel" marks="8" name="play again"/>
-                    <DashboardBlock keyt="6" gameName="CPE adjective preposition" marks="8" name="play again"/> */}
-                
-                </ul>
             </div>
         </div>
     )

@@ -11,6 +11,17 @@ background-color: whitesmoke;
 color: #333 !important;
 padding: 2em;
 border-radius: .2em;
+border: 1px solid red;
+
+@media(max-width: 900px){
+    width: 90%;
+    padding: .5em;
+
+    ul{
+        padding-inline-start: .2em;
+        font-size: .9rem;
+    }
+}
 
 h4{
     color: #333;
@@ -18,24 +29,44 @@ h4{
     margin-left: 1em;
 }
 
-li{
-    color: #333;
-    font-weight: 600;
-    list-style-type: none;
-    padding-top: .5em;
-}
-ul li::marker {
-    list-style-type: none;
-  }
-.red{
+  .red{
     color: red;
 }
+
 .amber{
     color: orange;
 }
+
 .green{
     color: green;
 }
+
+#testsAndScores{
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    justify-content: center;
+}
+
+.scoreContainer{
+    border: 1px solid #999;
+    color: #333;
+    padding: .4em;
+    margin: .5em;
+    font-weight: 600;
+    width: 300px;
+}
+.scoreButton{
+    border-radius: .2em;
+    border: 1px solid #666;
+    font-weight: 700;
+
+    :hover{
+        background-color: #333;
+        color: whitesmoke;
+    }
+}
+
 `
 
 function Dashboard() {

@@ -4,7 +4,6 @@ import { useHistory } from 'react-router-dom'
 import { WordDispatchContext } from "../context/wordsProvider"
 import { DisplayDispatchContext } from "../context/wordsProvider"
 import HomePageBlock from '../components/homePageBlock.js'
-import UserArea from '../components/userArea.js'
 import Persist from '../components/persist.js'
 
 function Home() {
@@ -112,7 +111,6 @@ function Home() {
                     </div>
                 </div>
             </div>
-            <UserArea />
             <HomePageBlock />
             <Persist />
         </div>

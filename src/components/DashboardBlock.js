@@ -13,11 +13,12 @@ function DashboardBlock(props) {
 
     return (
         <>
-        <li key={props.keyt}>
-            <Button name="Play Again" value={props.value} handleClick={props.handleClick} /> {props.gameName}: {props.marks} / 10. 
+        <div key={props.keyt} className="scoreContainer">
+            <Button name="Play Again" value={props.value} handleClick={props.handleClick} class="scoreButton"/> {props.gameName}<br/>
+            Your score: {props.marks} / 10.
             <span className={props.marks === 10 ? 'green' : props.marks <7 ? 'red' : 'amber'}> 
-            {props.marks === 10 ? ' Perfect!' : props.marks <7 ? ' Not good enough' : ' Pretty good'}</span>
-            </li>
+            {props.marks === 10 ? ' Perfect!' : props.marks <7 ? ' Not good' : ' Pretty good'}</span>
+            </div>
         </>
     )
 }
