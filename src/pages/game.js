@@ -13,19 +13,24 @@ function Game(props) {
                     <div className="targetPhrase" id={props.id}>{props.targetPhrase}</div>
                     <div className="tiles">{props.tiles}</div>
                     <div className="message">Question {props.counter} of {props.gameLength}<br /> Mistakes: {props.mistakes}</div>
+                   
+                    {props.isGameOver ?
+                    <>
+                        <div id="endArea">
+                        <div id="endGameMessage">You made {props.mistakes} mistakes. </div>
+                        <Button class="endGameBtns" value="again" name="Play Again" handleClick={props.endGame} />
+                        <Button class="endGameBtns" value="home" name="Home" handleClick={props.endGame} />
+
+                        </div>
+                    </>
+                    : null}
                 </div>
                 <div id="endGameArea">
                     <div id="endGameMessage">You made {props.mistakes} mistakes.</div>
                     <Button class="endGameBtns" value="again" name="Play Again" handleClick={props.endGame} />
                     <Button class="endGameBtns" value="home" name="Home" handleClick={props.endGame} />
                 </div>
-                {props.isGameOver ?
-                    <>
-                        <div id="endGameMessage">You made {props.mistakes} mistakes.</div>
-                        <Button class="endGameBtns" value="again" name="Play Again" handleClick={props.endGame} />
-                        <Button class="endGameBtns" value="home" name="Home" handleClick={props.endGame} />
-                    </>
-                    : null}
+
             </div>
         </>
 

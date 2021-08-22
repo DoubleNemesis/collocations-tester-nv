@@ -433,6 +433,14 @@ width: 90%;
   margin-bottom: 10vh;
 }
 
+.endArea{
+  display: flex;
+  min-height: 60vh;
+  justify-content: center;
+  width: 100%;
+  flex-direction: column;
+}
+
 #endGameArea {
   display: none;
   min-height: 60vh;

@@ -69,7 +69,7 @@ function WordProvider({ children }) {
     }
 
     useEffect(() => {
-        if (wordSet[targetPhrase] === selectedTile) {
+        if (wordSet[targetPhrase] == selectedTile) {
             let tempWordSet = { ...wordSet }
             delete tempWordSet[targetPhrase]
             setWordSet(() => tempWordSet)
@@ -77,7 +77,7 @@ function WordProvider({ children }) {
             setMessage('Correct')
 
             // game ends
-            if (Object.keys(wordSet).length === 0) {
+            if (Object.keys(wordSet).length == 0) {
                 setMessage('Game Over')
                 setIsGameOver(true)
                 let GameId = url;
@@ -92,9 +92,9 @@ function WordProvider({ children }) {
                         JSONUserData = JSON.parse(userDetails.userData);
 
                         // if this is not first attempt, find the name of course, update it and resend it
-                        if (JSONUserData['courses'].findIndex(x => x.name === GameId) >= 0) {
+                        if (JSONUserData['courses'].findIndex(x => x.name == GameId) >= 0) {
                             // console.log('situation 1')
-                            let index = JSONUserData['courses'].findIndex(x => x.name === GameId);
+                            let index = JSONUserData['courses'].findIndex(x => x.name == GameId);
                             JSONUserData['courses'][index]['marks'] = numberCorrect;
                         }
                         else if (JSONUserData['courses'].length > 0) { // add course to existing string
@@ -151,10 +151,13 @@ function WordProvider({ children }) {
             setMessage('Try Again')
             setMistakes(mistakes + 1)
         }
-    }, [selectedTile, gameLength, mistakes, setUserDetails, targetPhrase, url, userDetails.isLoggedIn, userDetails.userData, userDetails.userId, userDetails.userJWT, wordSet])
+    },[selectedTile])
+
+    //[selectedTile, gameLength, mistakes, setUserDetails, targetPhrase, url, userDetails.isLoggedIn, userDetails.userData, userDetails.userId, userDetails.userJWT, wordSet])
+    //[selectedTile, gameLength, mistakes, setUserDetails, targetPhrase, url, userDetails.isLoggedIn, userDetails.userData, userDetails.userId, userDetails.userJWT, wordSet])
 
     useEffect(() => {
-        if (message === 'Correct') {
+        if (message == 'Correct') {
             setCounter(prev => prev + 1)
         }
 
