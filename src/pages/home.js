@@ -20,7 +20,7 @@ function Home() {
     useEffect(()=>{
         setGameStyle({display:'none'})
         setRefresh((prev)=>!prev)
-    },[])
+    },[setGameStyle, setRefresh]) //check this
 
     if (document.getElementById('endGameArea')) {
         document.getElementById('endGameArea').style.display = 'none';
@@ -76,11 +76,6 @@ function Home() {
         history.push('/game')
     }
 
-    {/* <p></p>
-                        <p>&rarr; 100s of collocations</p>
-                        <p>&rarr; Imporove exam results</p>
-                        <p>&rarr; Sound like a native</p> */}
-
     return (
         <div>
             <div className='mainPage'>
@@ -94,7 +89,7 @@ function Home() {
                     <div id="homeTextArea">
                         <h2 className="subHeading">Choose an exam to get started</h2>
 
-                        <div class="homeBtns">
+                        <div className="homeBtns">
                             <Button class="homeBtn" handleClick={handleChoice} value="FCE" name="FCE" />
                             <Button class="homeBtn" handleClick={handleChoice} value="CAE" name="CAE" />
                             <Button class="homeBtn" handleClick={handleChoice} value="CPE" name="CPE" />

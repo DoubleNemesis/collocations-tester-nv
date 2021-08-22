@@ -21,10 +21,10 @@ function Logout() {
 
     return (
         <>
-        <PageTitle title="log out"/>
-        <div id="otherPages">
-<button onClick={handleClick}>Sign out</button>
-        </div>
+            <PageTitle title="log out" />
+            <div id="otherPages">
+                <button onClick={handleClick}>Sign out</button>
+            </div>
         </>
     )
 }

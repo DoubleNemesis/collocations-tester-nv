@@ -2,7 +2,7 @@ import React, {useContext} from 'react';
 import { useHistory } from 'react-router-dom'
 import { UserContext, UserDispatchContext } from "../context/userProvider";
 import { WordDispatchContext } from "../context/wordsProvider"
-import Button from './button'
+import Button from '../components/button'
 
 function UserArea(){
     const history = useHistory()

@@ -1,19 +1,20 @@
 import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom'
-import { UserContext, UserDispatchContext } from "../context/userProvider";
+import { UserContext } from "../context/userProvider";
+//import { UserContext, UserDispatchContext } from "../context/userProvider";
 import { WordDispatchContext } from "../context/wordsProvider"
-import Button from './button'
 import DashboardBlock from './DashboardBlock'
 
-function UserArea() {
+function DashBoardLogic() {
     const history = useHistory()
     const setUrl = useContext(WordDispatchContext)
     const userDetails = useContext(UserContext);
     const display = (userDetails.isLoggedIn) ? 'inline' : 'inline';
     const userAreaDisplay = { display: display }
     let newGameName = ''
-
     let userAreaData;
+    let userAreaMessage;
+
     function handleClick(e) {
         let gameToTarget = e.target.value
         setUrl(gameToTarget)
@@ -24,23 +25,20 @@ function UserArea() {
     }
 
     if (userDetails.isLoggedIn) {
-        userAreaData = userDetails.userData ? "Here are your tests." : "Your saved tests will appear here!";
+        userAreaMessage = userDetails.userData ? "Here are your tests." : "Your saved tests will appear here!";
         if (userDetails.userData !== 'undefined' && userDetails.userData !== '' && userDetails.userData) {
-            let courseJSON = JSON.parse(userDetails.userData);
-            userAreaData = courseJSON.courses.map((item, index) => (
+            let previousTestsJSON = JSON.parse(userDetails.userData);
+            userAreaData = previousTestsJSON.courses.map((item, index) => (
                 <div>
-                    {(function removeHyphens(x) {
-                        if (x.indexOf('-') > 0) {
-                            newGameName = x.replace('-', ' ')
+                    {(function removeHyphens(game) {
+                        if (game.indexOf('-') > 0) {
+                            newGameName = game.replace('-', ' ')
                             return removeHyphens(newGameName)
                         }
                         else {
-                            newGameName = x;
+                            newGameName = game;
                         }
                     })(item.name)}
-                    {/* <p>{newGameName}: {item.marks} out of 10
-                    <Button key={index} name="Try again" value={item.name} handleClick={handleClick} class={item.marks > 9 ? 'highScore' : 'lowScore'} />
-                    </p> */}
                     <DashboardBlock key={index} gameName={newGameName} marks={item.marks} name={item.name} value={item.name} handleClick={handleClick} />
                 </div>
             ))
@@ -51,7 +49,7 @@ function UserArea() {
     }
     return (
         <div style={userAreaDisplay} id="userArea">
-            <h4>saved tests</h4>
+            <h4>{userAreaMessage}</h4>
             <div id="testsAndScores">
                     {userAreaData}
             </div>
@@ -59,4 +57,4 @@ function UserArea() {
     )
 }
 
-export default UserArea
+export default DashBoardLogic

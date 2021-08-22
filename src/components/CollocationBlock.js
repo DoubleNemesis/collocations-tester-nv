@@ -1,10 +1,7 @@
 import React from 'react'
 
-function CollBlock(props){
+function CollocationBlock(props){
 
-let randomColor = require('randomcolor'); // import the script
-let col1 = randomColor(); // a hex code for an attractive color
-let col2 = randomColor(); // a hex code for an attractive color
 let color1 = {
     color: 'Navy'
 }
@@ -21,4 +18,4 @@ return (
 )
 }
 
-export default CollBlock
+export default CollocationBlock

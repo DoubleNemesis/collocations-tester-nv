@@ -6,14 +6,13 @@ function Footer(props) {
 
     return (
         <div>
-            <div className="push">
+            <div className="pushToBottom">
             <hr/>
             <div className="footer">&#169; TomsClassroom.com {year}</div>
             </div>
         </div>
         
     )
-
 }
 
 export default Footer

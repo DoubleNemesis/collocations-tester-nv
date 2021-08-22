@@ -2,7 +2,6 @@ import React, { createContext, useState, useEffect } from "react";
 
 const UserContext = createContext(undefined);
 const UserDispatchContext = createContext(undefined);
-let loggedInUserJWT ='';
 
 function UserProvider({ children }) {
   const [userDetails, setUserDetails] = useState({
@@ -16,7 +15,6 @@ function UserProvider({ children }) {
   useEffect(() => {
     const loggedInUser = localStorage.getItem('user')
     const loggedInUserJWT = localStorage.getItem('jwt')
-    const loggedInUserId = localStorage.getItem('id')
     const loggedInUserData = localStorage.getItem('userData')
 
     if (loggedInUserJWT) {
@@ -29,7 +27,7 @@ function UserProvider({ children }) {
     }
   }, [])
 
-  useEffect(() => { //stop rerender here?
+  useEffect(() => { 
     if (userDetails.userJWT.length > 2) {
       let newJwt = userDetails.userJWT;
       let base64Url = newJwt.split('.')[1];

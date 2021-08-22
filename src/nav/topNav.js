@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Navbar, Nav} from 'react-bootstrap';
-import { UserProvider, UserContext } from "../context/userProvider";
+import { UserContext } from "../context/userProvider";
 import { HashRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 function TopNav() {
@@ -10,14 +10,18 @@ function TopNav() {
     let registerAccount = (userDetails.isLoggedIn) ?  'account' : 'sign Up';
     let registerAccountNav = (userDetails.isLoggedIn) ?  'account' : 'register';
 
+
     return (
         <Navbar expand="lg">
+                <Router></Router>
+    <Switch></Switch>
+    <Route></Route>
             <Navbar.Brand><Link to="/" className="title">Tom's Classroom</Link></Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="ml-auto">
                 <Link className="nav-link" to="/">home</Link>
-                <Link className="nav-link" to="/game">game</Link>
+                {/* <Link className="nav-link" to="/game">game</Link> */}
                 <Link className="nav-link" to={logInOut}>{logInOutDisp}</Link>
                 <Link className="nav-link" to={registerAccountNav}>{registerAccount} </Link>
                 {userDetails.isLoggedIn ? <Link className="nav-link" to="/dashboard">dashboard</Link> : null}

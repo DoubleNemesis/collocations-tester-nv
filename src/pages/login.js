@@ -22,8 +22,8 @@ function Login() {
     e.preventDefault();
     let urlToAuth = 'https://tomsclassroom.com/student/?rest_route=/simple-jwt-login/v1/auth&username=' + loginDetails.username + '&password=' + loginDetails.password;
     let newJwt = ''
-    document.getElementById('loginLoading').style.display="inline";
-    document.getElementById('loginError').style.display="none";
+    document.getElementById('loginLoading').style.display = "inline";
+    document.getElementById('loginError').style.display = "none";
     setIsLoading('Getting your data...')
     fetch(urlToAuth, {
       method: 'POST',
@@ -44,15 +44,13 @@ function Login() {
       }
     }
     else {
-      if (loginDetails.username.length > 1){
-        // console.log('login failed')
+      if (loginDetails.username.length > 1) {
         setLoginErr('Login failed. Please check your details and try again.')
-        document.getElementById('loginError').style.display="inline";
-        document.getElementById('loginLoading').style.display="none";
+        document.getElementById('loginError').style.display = "inline";
+        document.getElementById('loginLoading').style.display = "none";
       }
-
-        }
-  }, [jwt])
+    }
+  }, [jwt, loginDetails.username.length]) //check this
 
   useEffect(() => {
     if (urlToLogin.length > 1) {
@@ -61,7 +59,7 @@ function Login() {
       }
       )
         .then(function (response) {
-          if (response.status == 200) { //check this 200 thing
+          if (response.status === 200) { //check this 200 thing
             let newJwt = jwt;
             let base64Url = newJwt.split('.')[1];
             let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
@@ -98,39 +96,36 @@ function Login() {
               return response.text()
             })
               .then(function (post) {
+                console.log('all done')
               })
           }
         }
         )
     }
-  }, [urlToLogin])
+  }, [urlToLogin, jwt, loginDetails.username, setUserDetails]) //check this
 
   return (
     <>
-    <PageTitle title="login"/>
-    <div className="profile" id="otherPages">
+      <PageTitle title="login" />
+      <div className="profile" id="otherPages">
 
         <form onSubmit={handleSubmit}>
-      
-      <div className="form-group">
-        <label htmlFor="username">Username <input type="text" className="form-control" name="username" id="username" value={loginDetails.username} onChange={handleChange}>
-        </input></label>
+          <div className="form-group">
+            <label htmlFor="username">Username <input type="text" className="form-control" name="username" id="username" value={loginDetails.username} onChange={handleChange}>
+            </input></label>
+          </div>
+          <div className="form-group">
+            <label htmlFor="password">Password <input type="password" className="form-control" name="password" id="password" value={loginDetails.password} onChange={handleChange}>
+            </input></label>
+          </div>
+          <div className="form-group">
+            <input type="submit" value="Log in" />
+          </div>
+        </form>
+        <div id="loginLoading">{isLoading}</div>
+        <div id="loginError">{loginErr}</div>
+        <p><a href="./#/account">Password Reset</a></p>
       </div>
-        
-      <div className="form-group">
-        <label htmlFor="password">Password <input type="password" className="form-control" name="password" id="password" value={loginDetails.password} onChange={handleChange}>
-        </input></label>
-      </div>
-          
-      <div className="form-group">
-        <input type="submit"  value="Log in" />
-      </div>
-      </form>
-     <div id="loginLoading">{isLoading}</div> 
-     <div id="loginError">{loginErr}</div>
-      
-      <p><a href="./#/account">Password Reset</a></p>
-    </div>
     </>
   );
 }

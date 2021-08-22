@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect, useContext } from "react";
-import { UserProvider, UserContext, UserDispatchContext } from "./userProvider";
+import { UserContext, UserDispatchContext } from "./userProvider";
 import Game from '../pages/game.js'
 import { useHistory } from 'react-router-dom'
 
@@ -24,6 +24,7 @@ function WordProvider({ children }) {
     const [gameName, setGameName] = useState('')
     const [isLoading, setIsLoading] = useState('Loading...');
     const [newGameName, setNewGameName] = useState('')
+    const [isGameOver, setIsGameOver] = useState(false)
 
 
     useEffect(() => {
@@ -33,10 +34,10 @@ function WordProvider({ children }) {
                     return response.json()
                 })
                 .then((data) => {
-                    let x = JSON.parse(data[0]['tc_game_data'])
-                    setWordSet(x)
-                    let y = Object.keys(x).length
-                    setGameLength(y)
+                    let newWordSet = JSON.parse(data[0]['tc_game_data'])
+                    setWordSet(newWordSet)
+                    let newGameLength = Object.keys(newWordSet).length
+                    setGameLength(newGameLength)
                     setGameStyle({display: 'inline'})
                     setGameName(url)
                     setIsLoading('')
@@ -46,9 +47,10 @@ function WordProvider({ children }) {
         }
     }, [url, refresh])
 
-    let tilesArray = []
+    
 
     useEffect(() => {
+        let tilesArray = []
         let counter = 0
         for (let key in wordSet) {
             tilesArray.push(
@@ -58,44 +60,45 @@ function WordProvider({ children }) {
             counter++
         }
         setTiles(tilesArray)
-    }, [wordSet])
+    }, [wordSet]) 
 
     function handleClick(e) {
         setMessage('')
-        let sTile = e.target.innerHTML
-        setSelectedTile(sTile)
+        let newSelectedTile = e.target.innerHTML
+        setSelectedTile(newSelectedTile)
     }
 
     useEffect(() => {
-        if (wordSet[targetPhrase] == selectedTile) {
+        if (wordSet[targetPhrase] === selectedTile) {
             let tempWordSet = { ...wordSet }
             delete tempWordSet[targetPhrase]
             setWordSet(() => tempWordSet)
             setSelectedTile(null)
             setMessage('Correct')
+
             // game ends
             if (Object.keys(wordSet).length === 0) {
                 setMessage('Game Over')
-                //let GameId = url.slice(68);
+                setIsGameOver(true)
                 let GameId = url;
                 let numberCorrect = gameLength - mistakes;
                 let newJSONUserDataString = '';
                 let JSONUserData = '';
                 let create;
-                // if user is signed in
+
+                // update users' data
                 if (userDetails.isLoggedIn) {
                     if (userDetails.userData !== 'undefined' && userDetails.userData !== '' && userDetails.userData) {
-                        //console.log(userDetails.userData)
                         JSONUserData = JSON.parse(userDetails.userData);
+
                         // if this is not first attempt, find the name of course, update it and resend it
-                        if (JSONUserData['courses'].findIndex(x => x.name == GameId) >= 0) {
-                            console.log('situation 1')
-                            let index = JSONUserData['courses'].findIndex(x => x.name == GameId);
+                        if (JSONUserData['courses'].findIndex(x => x.name === GameId) >= 0) {
+                            // console.log('situation 1')
+                            let index = JSONUserData['courses'].findIndex(x => x.name === GameId);
                             JSONUserData['courses'][index]['marks'] = numberCorrect;
                         }
-                        else if (JSONUserData['courses'].length > 0) {
-                            console.log('situation 2');
-                            // add course to existing string
+                        else if (JSONUserData['courses'].length > 0) { // add course to existing string
+                            // console.log('situation 2');
                             let newIndex = JSONUserData.courses.length;
                             JSONUserData.courses[newIndex] = {};
                             JSONUserData.courses[newIndex].name = GameId;
@@ -104,10 +107,9 @@ function WordProvider({ children }) {
                         create = "updateData";
                     }
                     else {
-                        console.log('situation 3');
+                        // console.log('situation 3');
                         create = "createData";
-                        let baseUserData = {};
-                        // creat new string 
+                        // let baseUserData = {};
                         JSONUserData = {}
                         JSONUserData.userID = userDetails.userId;
                         JSONUserData.courses = [];
@@ -123,7 +125,6 @@ function WordProvider({ children }) {
                     formData.append('jwt', userDetails.userJWT)
                     formData.append('userData', newJSONUserDataString)
                     formData.append('create', create)
-                    //console.log(create);
                     localStorage.setItem('userData', newJSONUserDataString)
                     fetch(urlForUpdate, {
                         method: 'POST',
@@ -135,29 +136,22 @@ function WordProvider({ children }) {
                         .then((post) => {
                             setUserDetails(prev => ({ ...prev, userData: newJSONUserDataString, }))
                         })
-                    // handle end of game logged in
-                    // on navigate away hide #gamePage
-                    console.log(gameName, 'end')
-                    document.getElementById('gameArea').style.display = 'none';
-                    document.getElementById('instruction').style.display = 'none';
-                    document.getElementById('endGameArea').style.display = 'flex';
-                    //document.getElementById('gameTitle').style.visibility ='hidden';
                 }
                 else {
-                    //console.log('user not logged in so finish') // handle end of game not logged in
-                    document.getElementById('gameArea').style.display = 'none';
-                    document.getElementById('instruction').style.display = 'none';
-                    document.getElementById('endGameArea').style.display = 'flex';
-                    //document.getElementById('gameTitle').style.visibility ='hidden';
-                    // on navigate away hide #gamePage
+                    return
                 }
             }
         }
+
+
+
+
+        
         else if (selectedTile.length > 1) {
             setMessage('Try Again')
             setMistakes(mistakes + 1)
         }
-    }, [selectedTile])
+    }, [selectedTile, gameLength, mistakes, setUserDetails, targetPhrase, url, userDetails.isLoggedIn, userDetails.userData, userDetails.userId, userDetails.userJWT, wordSet])
 
     useEffect(() => {
         if (message === 'Correct') {
@@ -177,40 +171,32 @@ function WordProvider({ children }) {
 
     function endGame(e){
         let buttonClicked = e.target.value;
-        if(buttonClicked == 'home'){
+        setIsGameOver(false)
+        if(buttonClicked === 'home'){
             setRefresh((prev)=>!prev)
-        document.getElementById('endGameArea').style.display = 'none';
-        document.getElementById('instruction').style.display = 'none';
-        document.getElementById('gameArea').style.display = 'none';
-        document.getElementById('gameTitle').style.visibility ='hidden';
         setCounter(0)
         setMistakes(0)
         history.push('/')
         //reset values
         }
-        else if (buttonClicked == 'again'){
+        else if (buttonClicked === 'again'){
         //reset values
         //set url to gameName
         setRefresh((prev)=>!prev)
         setCounter(0)
         setMistakes(0)
-        document.getElementById('gameArea').style.display = 'inline';
-        document.getElementById('instruction').style.display = 'inline';
-        document.getElementById('endGameArea').style.display = 'none';
-        document.getElementById('gameTitle').style.visibility ='visible';
         } 
     }
 
     useEffect(()=>{
-        (function removeHyphens(x){
-            if (x.indexOf('-')>0){
-                let newGN = x.replace('-', ' ')
-                setNewGameName(newGN)
-                //console.log('removing hyphens')
-                return removeHyphens(newGN)
+        (function removeHyphens(newGameName){
+            if (newGameName.indexOf('-')>0){
+                let newGameNameNoHyphens = newGameName.replace('-', ' ')
+                setNewGameName(newGameNameNoHyphens)
+                return removeHyphens(newGameNameNoHyphens) //memory leak???
             }
             else {
-                setNewGameName(x);
+                setNewGameName(newGameName);
              }
         })(gameName) 
     },[gameName])
@@ -223,8 +209,19 @@ function WordProvider({ children }) {
                 {children}
             </WordDispatchContext.Provider>
             </DisplayDispatchContext.Provider>
-            <Game loading={isLoading} gameName={newGameName.toUpperCase()} id={(message == 'Try Again' ? 'red' : 'inherit')} targetPhrase={targetPhrase}
-                tiles={tiles} counter={counter} gameLength={gameLength} mistakes={mistakes} endGame={endGame} style={gameStyle} setGameStyle={setGameStyle}/>
+            <Game 
+            loading={isLoading} 
+            gameName={newGameName.toUpperCase()} 
+            id={(message === 'Try Again' ? 'red' : 'inherit')}
+            isGameOver={isGameOver}
+            targetPhrase={targetPhrase}
+            tiles={tiles} 
+            counter={counter} 
+            gameLength={gameLength} 
+            mistakes={mistakes} 
+            endGame={endGame} 
+            style={gameStyle} 
+            setGameStyle={setGameStyle}/>
         </div>
     );
 }

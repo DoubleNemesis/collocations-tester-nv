@@ -12,6 +12,7 @@ import TopNav from "./nav/topNav";
 import Footer from "./components/footer"
 import Account from "./pages/account"
 import Dashboard from "./pages/dashboard"
+import BookTest from "./book/BookTest"
 
 function Main() {
 
@@ -21,6 +22,9 @@ function Main() {
       <UserProvider>
         <TopNav />
         <Switch>
+          <Route path="/book">
+            <BookTest />
+          </Route>
           <Route path="/register">
             <Register />
           </Route>

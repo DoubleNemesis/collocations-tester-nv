@@ -257,6 +257,11 @@ code {
   color: #fff !important;
 }
 
+a.nav-link:hover{
+  text-decoration: overline;
+
+}
+
 .navbar-toggler-icon {
   background-color: transparent !important;
 }
@@ -371,6 +376,7 @@ p {
 
 .gamesListInner {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-around;
   padding: 3em;
   color: whitesmoke;
@@ -463,7 +469,7 @@ width: 90%;
   box-shadow: 3px 3px #333;
 }
 
-.push {
+.pushToBottom {
   margin-top: auto;
 }
 

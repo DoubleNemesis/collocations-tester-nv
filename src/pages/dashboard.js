@@ -1,6 +1,6 @@
-import React, { useContext, useEffect, useState } from "react"
+import React, { useContext, useEffect } from "react"
 import styled from 'styled-components'
-import UserAreaAc from '../components/UserAreaAc.js'
+import DashBoardLogic from '../components/DashBoardLogic.js'
 import PageTitle from '../components/PageTitle'
 import { DisplayDispatchContext } from "../context/wordsProvider"
 
@@ -76,13 +76,13 @@ function Dashboard() {
     useEffect(()=>{
         setGameStyle({display:'none'})
         setRefresh((prev)=>!prev)
-    },[])
+    },[setGameStyle, setRefresh]) //check this
 
     return (
         <>
             <PageTitle title="dashboard" />
             <TestBlock>
-                    <UserAreaAc />
+                    <DashBoardLogic />
             </TestBlock>
         </>
     )
