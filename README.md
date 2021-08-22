@@ -14,4 +14,8 @@ useEffects to check:
 wordpreovider 62 tilesarray causes rerender loop
 
 # collocations-tester-nv
+
+To do:
+     check password change for non admin roles?
+     check css...tiles overhanging container on mobile view?
  
