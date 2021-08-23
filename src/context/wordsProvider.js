@@ -70,9 +70,20 @@ function WordProvider({ children }) {
 
     useEffect(() => {
         if (wordSet[targetPhrase] == selectedTile) {
-            let tempWordSet = { ...wordSet }
-            delete tempWordSet[targetPhrase]
-            setWordSet(() => tempWordSet)
+            // let tempWordSet = { ...wordSet }
+            // console.log(wordSet)
+            // console.log(tempWordSet[targetPhrase])
+            // delete tempWordSet[targetPhrase]
+            // setWordSet(() => tempWordSet)
+
+setWordSet(prev=>{
+    delete prev[targetPhrase]
+    return(
+        {...prev}
+    )
+})
+
+
             setSelectedTile(null)
             setMessage('Correct')
 
@@ -141,20 +152,12 @@ function WordProvider({ children }) {
                     return
                 }
             }
-        }
-
-
-
-
-        
+        }   
         else if (selectedTile.length > 1) {
             setMessage('Try Again')
             setMistakes(mistakes + 1)
         }
-    },[selectedTile])
-
-    //[selectedTile, gameLength, mistakes, setUserDetails, targetPhrase, url, userDetails.isLoggedIn, userDetails.userData, userDetails.userId, userDetails.userJWT, wordSet])
-    //[selectedTile, gameLength, mistakes, setUserDetails, targetPhrase, url, userDetails.isLoggedIn, userDetails.userData, userDetails.userId, userDetails.userJWT, wordSet])
+    },[selectedTile, gameLength, setUserDetails, url, userDetails.isLoggedIn, userDetails.userData, userDetails.userId, userDetails.userJWT])
 
     useEffect(() => {
         if (message == 'Correct') {
