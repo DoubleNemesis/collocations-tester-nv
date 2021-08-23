@@ -94,7 +94,7 @@ function Home() {
                     <div id="homeTextArea">
                         <h2 className="subHeading">Choose an exam to get started</h2>
 
-                        <div class="homeBtns">
+                        <div className="homeBtns">
                             <Button class="homeBtn" handleClick={handleChoice} value="FCE" name="FCE" />
                             <Button class="homeBtn" handleClick={handleChoice} value="CAE" name="CAE" />
                             <Button class="homeBtn" handleClick={handleChoice} value="CPE" name="CPE" />

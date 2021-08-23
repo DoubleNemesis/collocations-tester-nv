@@ -24,6 +24,7 @@ function WordProvider({ children }) {
     const [gameName, setGameName] = useState('')
     const [isLoading, setIsLoading] = useState('Loading...');
     const [newGameName, setNewGameName] = useState('')
+    const [isGameOver, setIsGameOver] = useState(false)
 
 
     useEffect(() => {
@@ -76,6 +77,7 @@ function WordProvider({ children }) {
             // game ends
             if (Object.keys(wordSet).length === 0) {
                 setMessage('Game Over')
+                setIsGameOver(true)
                 //let GameId = url.slice(68);
                 let GameId = url;
                 let numberCorrect = gameLength - mistakes;
@@ -177,6 +179,7 @@ function WordProvider({ children }) {
 
     function endGame(e){
         let buttonClicked = e.target.value;
+        setIsGameOver(false)
         if(buttonClicked == 'home'){
             setRefresh((prev)=>!prev)
         document.getElementById('endGameArea').style.display = 'none';
@@ -223,7 +226,7 @@ function WordProvider({ children }) {
                 {children}
             </WordDispatchContext.Provider>
             </DisplayDispatchContext.Provider>
-            <Game loading={isLoading} gameName={newGameName.toUpperCase()} id={(message == 'Try Again' ? 'red' : 'inherit')} targetPhrase={targetPhrase}
+            <Game  isGameOver={isGameOver} loading={isLoading} gameName={newGameName.toUpperCase()} id={(message == 'Try Again' ? 'red' : 'inherit')} targetPhrase={targetPhrase}
                 tiles={tiles} counter={counter} gameLength={gameLength} mistakes={mistakes} endGame={endGame} style={gameStyle} setGameStyle={setGameStyle}/>
         </div>
     );

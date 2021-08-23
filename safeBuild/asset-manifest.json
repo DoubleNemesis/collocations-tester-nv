@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/collocations-tester/static/css/main.42f01a16.css",
+    "main.js": "/collocations-tester/static/js/main.74795086.js",
+    "main.js.map": "/collocations-tester/static/js/main.74795086.js.map",
+    "index.html": "/collocations-tester/index.html",
+    "static/css/main.42f01a16.css.map": "/collocations-tester/static/css/main.42f01a16.css.map",
+    "static/js/main.74795086.js.LICENSE.txt": "/collocations-tester/static/js/main.74795086.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/css/main.42f01a16.css",
+    "static/js/main.74795086.js"
+  ]
+}
